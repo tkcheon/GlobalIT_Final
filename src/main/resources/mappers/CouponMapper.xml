@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.CouponMapper">
+
+
+
+    <insert id="issueCouponsForAllMembers3000">
+        INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
+        SELECT m.member_id, LEFT(UUID(), 8), #{discount_amount}, NOW()
+        FROM member m;
+    </insert>
+
+    <insert id="issueCouponsForAllMembers5000">
+        INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
+        SELECT m.member_id, LEFT(UUID(), 8), #{discount_amount}, NOW()
+        FROM member m;
+    </insert>
+
+
+
+
+
+    <insert id="issueCouponForMember">
+        INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
+        VALUES (#{member_id}, LEFT(UUID(), 8), #{discount_amount}, NOW());
+    </insert>
+
+
+
+    <insert id="insertCoupon">
+        INSERT INTO coupon (member_id, coupon_code, discount_amount, start_date)
+        VALUES (#{member_id}, #{coupon_code}, #{discount_amount}, NOW());
+    </insert>
+
+
+    <select id="getCouponsByMemberId" resultType="coupon">
+         SELECT coupon_code, discount_amount, start_date, end_date, used_date
+    FROM coupon
+    WHERE member_id = #{member_id};
+    </select>
+
+
+    <select id="getAllIssuedCoupons" resultType="coupon">
+        SELECT c.coupon_code, c.discount_amount, c.start_date, c.end_date, c.used_date, m.member_name
+    FROM coupon c
+    JOIN member m ON c.member_id = m.member_id;
+    </select>
+
+</mapper>

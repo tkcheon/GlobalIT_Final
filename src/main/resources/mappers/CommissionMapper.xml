@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="first.final_project.dao.CommissionMapper">
+
+
+    <select id="selectList" parameterType="int" resultType="CommissionVo">
+    SELECT
+        d.deliveries_id,            
+        r.rider_name,               
+        o.orders_id,             
+        o.orders_price,            
+        dh.delivery_history_status, 
+        o.orders_cdate,             
+        s.shop_name,                
+        a.addr_line1,               
+        a.addr_line2,               
+        CASE
+            WHEN c.commission IS NOT NULL THEN c.commission
+            ELSE o.orders_price * 0.03  
+        END AS commission
+    FROM
+        deliveries d
+    JOIN
+
+        riders r ON d.raiders_id = r.raiders_id
+    JOIN
+        orders o ON d.orders_id = o.orders_id
+    JOIN
+        delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN
+        shop s ON o.shop_id = s.shop_id
+    JOIN
+        addr a ON o.addr_id = a.addr_id
+    LEFT JOIN
+        commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+    WHERE
+        d.raiders_id = #{raiders_id}
+        AND dh.delivery_history_status = '배달 완료'
+    ORDER BY
+        o.orders_cdate DESC;
+    </select>
+
+
+    <select id="selectTotalCommission" parameterType="int" resultType="double">
+    SELECT COALESCE(SUM(
+        CASE
+            WHEN c.commission IS NOT NULL THEN c.commission
+            ELSE o.orders_price * 0.03  -- 주문 금액의 3%를 수수료로 계산
+        END
+    ), 0)
+    FROM
+        deliveries d
+    JOIN
+        orders o ON d.orders_id = o.orders_id
+    LEFT JOIN
+        commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+    WHERE d.raiders_id = #{raiders_id}
+    AND EXISTS (SELECT 1 FROM delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료');
+    </select>
+
+
+    <select id="getTotalCount" parameterType="int" resultType="int">
+    SELECT COUNT(*)
+    FROM deliveries d
+    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    WHERE d.raiders_id = #{raiders_id}
+    AND dh.delivery_history_status = '배달 완료';
+    </select>
+
+
+    <select id="commissionExists" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM commissions
+    WHERE raiders_id = #{raiders_id}
+    AND deliveries_id = #{deliveries_id};
+    </select>
+
+
+    <insert id="insertCommission" parameterType="map">
+    INSERT INTO commissions (raiders_id, deliveries_id, commission)
+    VALUES (#{raiders_id}, #{deliveries_id}, #{commission});
+    </insert>
+
+
+    <select id="selectPageList" parameterType="map" resultType="CommissionVo">
+    SELECT
+        d.deliveries_id, r.rider_name, o.orders_id, o.orders_price, dh.delivery_history_status,
+        o.orders_cdate, s.shop_name, a.addr_line1, a.addr_line2,
+        COALESCE(c.commission, o.orders_price * 0.03) AS commission
+    FROM
+        deliveries d
+    JOIN riders r ON d.raiders_id = r.raiders_id
+    JOIN orders o ON d.orders_id = o.orders_id
+    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN shop s ON o.shop_id = s.shop_id
+    JOIN addr a ON o.addr_id = a.addr_id
+    LEFT JOIN commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+    WHERE d.raiders_id = #{raiders_id}
+    AND dh.delivery_history_status = '배달 완료'
+    ORDER BY o.orders_cdate DESC
+    LIMIT #{offset}, #{blockList};
+    </select>
+
+
+
+    <select id="selectPageListByDate" parameterType="map" resultType="CommissionVo">
+    SELECT 
+        d.deliveries_id, r.rider_name, o.orders_id, o.orders_price, dh.delivery_history_status, 
+        o.orders_cdate, s.shop_name, a.addr_line1, a.addr_line2, 
+        COALESCE(c.commission, o.orders_price * 0.03) AS commission
+    FROM 
+        deliveries d
+    JOIN riders r ON d.raiders_id = r.raiders_id
+    JOIN orders o ON d.orders_id = o.orders_id
+    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN shop s ON o.shop_id = s.shop_id
+    JOIN addr a ON o.addr_id = a.addr_id
+    LEFT JOIN commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+    WHERE 
+        d.raiders_id = #{raiders_id}
+        AND dh.delivery_history_status = '배달 완료'
+        <if test="startDate != null and startDate != ''">
+            AND o.orders_cdate &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            AND o.orders_cdate &lt;= #{endDate}
+        </if>
+    ORDER BY 
+        o.orders_cdate DESC
+    LIMIT #{offset}, #{blockList};
+    </select>
+
+
+    <select id="getTotalCountByDate" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM deliveries d
+    JOIN delivery_history dh ON d.deliveries_id = dh.deliveries_id
+    JOIN orders o ON d.orders_id = o.orders_id
+    WHERE d.raiders_id = #{raiders_id}
+    AND dh.delivery_history_status = '배달 완료'
+        <if test="startDate != null and startDate != ''">
+        AND o.orders_cdate &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+        AND o.orders_cdate &lt;= #{endDate}
+        </if>
+    </select>
+
+
+    <select id="selectTotalCommissionByDate" parameterType="map" resultType="double">
+    SELECT COALESCE(SUM(
+        CASE
+            WHEN c.commission IS NOT NULL THEN c.commission
+            ELSE o.orders_price * 0.03
+        END
+    ), 0)
+    FROM deliveries d
+    JOIN orders o ON d.orders_id = o.orders_id
+    LEFT JOIN commissions c ON d.deliveries_id = c.deliveries_id AND d.raiders_id = c.raiders_id
+    WHERE d.raiders_id = #{raiders_id}
+    AND EXISTS (SELECT 1 FROM delivery_history dh WHERE dh.deliveries_id = d.deliveries_id AND dh.delivery_history_status = '배달 완료')
+        <if test="startDate != null and startDate != ''">
+        AND o.orders_cdate &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+        AND o.orders_cdate &lt;= #{endDate}
+        </if>
+    </select>
+</mapper>

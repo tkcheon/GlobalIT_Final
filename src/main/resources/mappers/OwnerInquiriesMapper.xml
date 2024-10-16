@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.OwnerInquiriesMapper">
+
+    <select id="selectList" resultType="owner_inquiries">
+        select *,
+        (select count(*) from owner_inquiries o
+		left join owner_answer oa on o.o_inquiries_id = oa.o_inquiries_id
+        where oa.o_answer_content is null) as owner_null_answer_count
+        from owner_inquiries o
+		left join owner_answer oa on o.o_inquiries_id = oa.o_inquiries_id
+        order by o.o_inquiries_id desc
+    </select>
+
+    <select id="selectFromIdx" parameterType="int" resultType="owner_inquiries">
+        select * from owner_inquiries where o_inquiries_id=#{o_inquiries_id} 
+    </select>
+
+    <insert id="insert" parameterType="owner_inquiries">
+        insert into owner_inquiries(o_inquiries_title,o_inquiries_content,owner_id)
+        values(#{o_inquiries_title},#{o_inquiries_content},#{owner_id})
+    </insert>
+
+    <update id="update" parameterType="owner_inquiries">
+        update owner_inquiries set o_inquiries_title=#{o_inquiries_title}, o_inquiries_content=#{o_inquiries_content}, owner_id=#{owner_id}
+                                    where o_inquiries_id=#{o_inquiries_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from owner_inquiries where o_inquiries_id=#{o_inquiries_id}
+    </delete>
+</mapper>

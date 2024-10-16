@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.MemberMapper">
+
+    <select id="selectList" resultType="member">
+       select * from member order by member_id
+    </select>
+
+    <select id="selectOneFromIdx" parameterType="int" resultType="member">
+        select * from member where member_id=#{member_id}
+    </select>
+
+    <select id="selectOneFromId" parameterType="String" resultType="member">
+        select * from member where member_accountId=#{member_accountId}
+    </select>
+
+    <select id="selectOneFromNickname" parameterType="String" resultType="member">
+    select * from member where member_nickname=#{member_nickname}
+    </select>
+
+    <select id="getAddr" parameterType="int" resultType="member">
+        SELECT m.*, a.addr_line1, a.addr_line2
+        FROM member m
+        INNER JOIN (
+            SELECT *
+            FROM addr 
+            WHERE member_id = #{member_id}
+            ORDER BY addr_id DESC
+            LIMIT 1
+        ) a ON a.member_id = m.member_id
+        WHERE m.member_id = #{member_id}
+    </select>
+
+    <insert id="insert" parameterType="member">
+        insert into member(`member_name`, 
+                    `member_nickname`, 
+                    `member_accountId`, 
+                    `member_pwd`, 
+                    `member_email`, 
+                    `member_phone` 
+                    )values( 
+                    #{member_name}, 
+                    #{member_nickname}, 
+                    #{member_accountId}, 
+                    #{member_pwd}, 
+                    #{member_email}, 
+                    #{member_phone} 
+                    )
+    </insert>
+
+    <update id="update" parameterType="member">
+        update member set member_name=#{member_name}, member_nickname=#{member_nickname}, member_pwd=#{member_pwd}, member_email=#{member_email}, member_phone=#{member_phone}
+        where member_id=#{member_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from member where member_id=#{member_id}
+    </delete>
+
+    <select id="getMemberWithCoupons" resultMap="memberWithCouponsResultMap">
+        SELECT
+            m.*,
+            c.coupon_id,
+            c.coupon_code,
+            c.discount_amount,
+            c.start_date,
+            c.end_date
+        FROM
+            member m
+        LEFT JOIN
+            coupon c ON m.member_id = c.member_id
+        WHERE
+            m.member_id = #{member_id}
+    </select>
+
+
+    <resultMap id="memberWithCouponsResultMap" type="first.final_project.vo.MemberVo">
+        <id property="member_id" column="member_id"/>
+        <result property="member_name" column="member_name"/>
+        <result property="member_nickname" column="member_nickname"/>
+        <result property="member_accountId" column="member_accountId"/>
+        <result property="member_pwd" column="member_pwd"/>
+        <result property="member_email" column="member_email"/>
+        <result property="member_phone" column="member_phone"/>
+        <result property="member_cdate" column="member_cdate"/>
+        <result property="addr_line1" column="addr_line1"/>
+        <result property="addr_line2" column="addr_line2"/>
+        <result property="owner_name" column="owner_name"/>
+
+       <collection property="coupons" ofType="first.final_project.vo.CouponVo" column="member_id" select="selectCouponsByMemberId">
+            <id property="coupon_id" column="coupon_id"/>
+            <result property="coupon_code" column="coupon_code"/>
+            <result property="discount_amount" column="discount_amount"/>
+            <result property="start_date" column="start_date"/>
+            <result property="end_date" column="end_date"/>
+        </collection>
+    </resultMap>
+    
+    <select id="selectCouponsByMemberId" resultType="first.final_project.vo.CouponVo" parameterType="int">
+        SELECT coupon_id, coupon_code, discount_amount, start_date, end_date
+        FROM coupons
+        WHERE member_id = #{member_id}
+    </select>
+</mapper>

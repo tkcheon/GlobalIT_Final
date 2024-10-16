@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="first.final_project.dao.OwnerAnswerMapper">
+
+    <select id="selectOne" parameterType="int" resultType="owner_answer">
+        select * from owner_answer where o_answer_id=#{o_answer_id} 
+    </select>
+
+    <select id="selectListFromIdx" parameterType="int" resultType="owner_answer">
+        select * from owner_answer where o_inquiries_id=#{o_inquiries_id} order by o_answer_id desc
+    </select>
+
+    <insert id="insert" parameterType="owner_answer">
+        insert into owner_answer(o_answer_content,admin_id,o_inquiries_id)
+        values(#{o_answer_content},#{admin_id},#{o_inquiries_id})
+    </insert>
+
+    <update id="update" parameterType="owner_answer">
+        update owner_answer set o_answer_content=#{o_answer_content},
+                                admin_id=#{admin_id},
+                                o_inquiries_id=#{o_inquiries_id}
+                                where o_answer_id=#{o_answer_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from owner_answer where o_answer_id=#{o_answer_id}
+    </delete>
+</mapper>
+
+
