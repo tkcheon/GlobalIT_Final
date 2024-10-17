@@ -99,10 +99,11 @@ Main : 프로덕션 코드. 항상 Main을 기준으로 branch 생성<br>
 ## 사용 방법
 1. 파일을 다운 받는다.<br>
 2. VSCode로 실행을 한다.<br>
-3. MySQL을 실행하여 HanIepManSQL.sql을 실행하여 테이블을 등록한다.<br>
-4. <a href="http://developers.kakao.com/">카카오 개발자 사이트</a>에서 api를 발급 받는다.<br>
-5. <a href="https://portone.io/korea/ko">아임포트 사이트</a>에서 api를 발급 받는다.<br>
-6. application.property 에서 imp.api.key랑 imp.api.secretkey, kakao.api.key를 작성한다.<br>
+3. MySQL을 실행하여 HanIepManSQL.sql을 참고하여 테이블을 등록한다.<br>
+4. DB 연결 설정을 본인 DB에 맞게 변경해준다. <br>
+5. kakaomap 사용을 위해 <a href="http://developers.kakao.com/">카카오 개발자 사이트</a>에서 api를 발급 받는다.<br>
+6. kakaopay 결제 기능을 위해 <a href="https://portone.io/korea/ko">아임포트 사이트</a>에서 api를 발급 받는다.(https://developers.portone.io/opi/ko/integration/ready/readme?v=v2)<br>
+7. application.property 에서 imp.api.key랑 imp.api.secretkey, kakao.api.key를 작성한다.<br>
 <br>
 <br>
 <br>
