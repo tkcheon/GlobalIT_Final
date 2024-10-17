@@ -55,7 +55,7 @@
 
 ### 
 <!-- 깃헙 레포 사용 언어 수 -->
-https://img.shields.io/github/languages/count/beygee/survive 
+(https://img.shields.io/github/languages/count/beygee/survive)
 <!--깃헙 레포 최다빈도 언어 -->
 https://img.shields.io/github/languages/top/beygee/survive
 <!--깃헙 레포 코드 용량-->
