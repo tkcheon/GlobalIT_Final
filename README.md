@@ -59,10 +59,14 @@ global IT(글로벌 아이티)<br>
 <br>
 파이널 프로젝트 주제 : 상품 자동 주문 및 딜리버리 관리 웹 서비스 시스템<br><br>
 주제 선정 이유 : 쇼핑몰과 상품 자동 주문 딜리버리 시스템의 2가지 주제 중에 좀 더 재미있고 큰 프로젝트가 자동 주문 딜리버리 시스템이라 <br><br>
-생각되었기 때문에 해당 주제를 선정<br>
-<br>
+생각되었기 때문에 해당 주제를 선정<br><br>
 Final Project 개발 기간<br><br>
 총 개발 기간 : 2024.08.17 ~ 2024.10.04<br><br>
+프로젝트 내 역할 : 가맹점 CRUD, 결제 기능구현(Iamport), 메인화면 구성, AWS DB 환경 구성 <br><br>
+회고 : 최종 프로젝트를 통해 백 엔드와 프론트엔드간 데이터 전송 흐름에 눈을 띄게 되었고, github 및 Jira 사용으로 <br><br>
+프로젝트 및 형상 관리를 하며 개발자의 업무방식을 경험해보는 뜻깊은 시간이였습니다. <br><br>
+초기 기획했던 부분까지 완벽하게 수행하지 못해 개발 실력을 조금 더 향상 시켜야겠다는 생각이 들었습니다. <br><br>
+또한, 팀원들간의 협업 방식 및 잦은 회의 등으로 일정 및 개발에 대해 관리하는 게 얼마나 중요한 지 알게 되었습니다. <br><br> 
 <img width="1355" alt="스크린샷 2024-10-17 오후 2 04 01" src="https://github.com/user-attachments/assets/1e52dc0c-8909-4160-9f40-2ff1d95296d4">
 <br>
 <br>
@@ -1039,5 +1043,8 @@ https://github.com/tkcheon/GlobalIT_Final.git
  ┣ 📜mvnw.cmd
  ┣ 📜pom.xml
  ┗ 📜README.md
-</details>
 ```
+</details>
+
+## 발표자료
+<iframe src="https://1drv.ms/p/c/0c7d9b79476a227c/IQSlOlP3Rax9RqfDWpApVMWiAQEcBP2UNOGaYsJekfT0fkA" width="402" height="327" frameborder="0" scrolling="no"></iframe>
