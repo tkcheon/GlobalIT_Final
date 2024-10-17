@@ -67,6 +67,8 @@ Final Project 개발 기간<br><br>
 <br>
 <br>
 <br>
+
+프로젝트 Demo : 43.201.17.45:8080
 ## 팀원 소개
 
 |팀장| 팀원 1     | 팀원 2      | 팀원 3      | 팀원 4      |
@@ -89,7 +91,11 @@ https://www.erdcloud.com/d/cd5tCqegTyFd9srKc
 ## Git 브랜치 전략
 ![269341571-ceeda2bb-cc43-441d-aadb-a373d2e53c33](https://github.com/user-attachments/assets/5eb190ce-eff2-47df-94ad-1a056969cd55)
 
-저장소를 효과적으로 활용하기 위해 Github-Flow 전략 브랜치를 생성한다.<br>
+저장소를 효과적으로 활용하기 위해 Github-Flow 전략 브랜치를 생성한다.<br><br>
+
+1. Main branch를 기준으로 기능별 branch 생성<br><br>
+2. 기능별 branch는 다른 팀원과 중복이 없도록 개발 전 사전에 협의 및 회의 시간에 결정 <br><br>
+3. 만약, 기능 개발 시 중간에 겹치는 부분이 있는 경우에는 한 명의 branch를 기준으로 merge 이후 main에 PR <br><br>
 Main : 프로덕션 코드. 항상 Main을 기준으로 branch 생성<br>
 <br>
 <br>
