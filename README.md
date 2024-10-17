@@ -111,9 +111,14 @@ Main : 프로덕션 코드. 항상 Main을 기준으로 branch 생성<br>
 ### 설치
 
 ```bash
-git clone https://github.com/SongEH/FinalProject
-cd SongEH/FinalProject
-nvm install
+1. 파일을 다운받을 디렉토리로 이동
+ex) cd java_test
+
+2. 해당 github clone
+https://github.com/tkcheon/GlobalIT_Final.git
+
+3. s실행 
+
 ```
 
 ## 패키지 구조
