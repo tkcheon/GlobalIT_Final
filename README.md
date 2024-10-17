@@ -123,7 +123,7 @@ ex) cd java_test
 2. 해당 github clone
 https://github.com/tkcheon/GlobalIT_Final.git
 
-3. s실행 
+3. 실행 
 
 ```
 
