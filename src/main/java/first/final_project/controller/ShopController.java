@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,6 +66,9 @@ public class ShopController {
 
     @Autowired
     AddrService addrService;
+
+    // @GetMapping("/shops")
+
 
     @RequestMapping("/shop/list.do")
     public String shop_list(
@@ -120,6 +124,7 @@ public class ShopController {
     
         return "shop/shop_list";
     }
+
 
     @RequestMapping("/shop/food_list.do")
     public String shop_food_list(

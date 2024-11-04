@@ -44,32 +44,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
           alert("최소 주문 가격 설정은 필수입니다.");
           return;
         }
-        let shopData = {
-        shop_name: shop_name,
-        shop_content: shop_content,
-        shop_addr1: shop_addr1,
-        shop_addr2: shop_addr2,
-        shop_call: shop_call,
-        shop_min_price: shop_min_price,
-        shop_open_hour: f.shop_open_hour.value,
-        shop_close_hour: f.shop_close_hour.value,
-        shop_close_day: f.shop_close_day.value,
-        food_category: f.food_category.value
-        };
+        let shop_open_hour = f.shop_open_hour.value;
+        let shop_close_hour = f.shop_close_hour.value;
+        let shop_close_day = f.shop_close_day.value;
+        let food_category = f.food_category.value;
 
-        $.ajax({
-        url     :     "/api/shop/register",
-        method  :     "POST",
-        contentType :  "application/json",
-        data    :      JSON.stringify(shopData),
-        success :   function(res_data){
-          alert("가게가 성공적으로 등록되었습니다.");
-          window.location = "/shop/list.do";
-        },
-        error   :   function(err){
-        alert(error.responseText)
-        }
-        });
+        f.action = "insert.do";
+        f.submit();
       }
     </script>
     <script>

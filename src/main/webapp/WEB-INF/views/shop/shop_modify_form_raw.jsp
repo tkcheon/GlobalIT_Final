@@ -16,25 +16,9 @@
 
         let shop_id = f.shop_id.value;
         let shop_content = oEditors.getById["shop_content"].getIR().trim();
-        let shop_modify_data = {
-          shop_id : f.shop_id.value,
-          shop_content : shop_content
-        };
-        alert("여기");
-        $.ajax({
-        url     :     "api/shop/modify/${shop_id}",
-        method  :   "PUT",
-        contentType : "application/json",
-        data    :      JSON.stringify(shop_modify_data),
-        success :   function(res_data){
-          alert("수정성공");
-          window.location = "/main/display.do";
-        },
-        error   :   function(err){
-        alert(error.responseText)
-        }
-        });
-        }
+        f.action = "modify.do";
+        f.submit();
+      }
 
       function formatPhoneNumber(input) {
       // 숫자만 남기기
